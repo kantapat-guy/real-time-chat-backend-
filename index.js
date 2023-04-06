@@ -16,8 +16,18 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log(`Socket.io was connected ID: ${socket.id}`);
 
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User ID: ${socket.id} joined room ID: ${data}`);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.roomId).emit("receive_message", data);
+    console.log("message_____sending");
+  });
+
   socket.on("disconnect", () => {
-    console.log("User disconnected".socket.id);
+    console.log("User disconnected", socket.id);
   });
 });
 

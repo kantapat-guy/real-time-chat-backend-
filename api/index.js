@@ -6,7 +6,12 @@ const config = require("../config");
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  })
+);
 
 //middleware
 if (config.isVercel) {
